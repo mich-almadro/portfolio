@@ -28,20 +28,27 @@ form.addEventListener('submit', async event => {
   document.querySelector('#prepared-message').value = message;
   if (!config.formspreeEndpoint) {
     const draftUrl = gmailDraft('Inquiry | Virtual Assistance', message);
-    //status.textContent = 'Opening Gmail in a new tab. Review your draft and press Send there. No message has been sent yet.';
-    fallback.hidden = false;
     const retry = document.querySelector('#open-gmail-draft');
+
+    // Hide feedback and fallback options for each attempt.
+    status.textContent = '';
+    fallback.hidden = true;
+
     retry.href = draftUrl;
     retry.hidden = false;
-    // Run synchronously within the submit gesture so the browser can allow the new tab.
+
     const draftTab = window.open('about:blank', '_blank');
+
     if (draftTab) {
       draftTab.opener = null;
       draftTab.location.replace(draftUrl);
     } else {
-      status.textContent = 'Your browser blocked the new tab. Use Open draft in Gmail below, or copy the message. No email has been sent.';
+      // Show this section only when the new tab is blocked.
+      status.textContent = 'Your browser blocked the new tab. Open your Gmail draft below, or copy the message.';
+      fallback.hidden = false;
     }
-    return;
+
+return;
   }
   const button = form.querySelector('button[type="submit"]');
   button.disabled = true; status.textContent = 'Sending your request…';
