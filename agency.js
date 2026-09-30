@@ -28,7 +28,7 @@ form.addEventListener('submit', async event => {
   document.querySelector('#prepared-message').value = message;
   if (!config.formspreeEndpoint) {
     const draftUrl = gmailDraft('Inquiry | Virtual Assistance', message);
-    status.textContent = 'Opening Gmail in a new tab. Review your draft and press Send there. No message has been sent yet.';
+    //status.textContent = 'Opening Gmail in a new tab. Review your draft and press Send there. No message has been sent yet.';
     fallback.hidden = false;
     const retry = document.querySelector('#open-gmail-draft');
     retry.href = draftUrl;
